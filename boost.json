@@ -1,0 +1,11 @@
+{
+    "agents": [
+        "junie",
+        "claude_code",
+        "kiro"
+    ],
+    "cloud": false,
+    "mcp": true,
+    "nightwatch": false,
+    "sail": false
+}
