@@ -12,7 +12,7 @@ class IndexTicketRequest extends FormRequest
     /**
      * Sort columns a client is allowed to order by.
      */
-    public const SORTABLE = ['created_at', 'updated_at', 'title', 'due_date'];
+    public const SORTABLE = ['created_at', 'updated_at', 'title', 'id', 'description', 'status', 'priority', 'due_date'];
 
     public function authorize(): bool
     {

@@ -26,6 +26,7 @@ class TicketController extends Controller
         $sort = $request->input('sort', 'created_at');
         $direction = $request->input('direction', 'desc');
         $perPage = (int) $request->input('per_page', 10);
+        $id = (int) $request->input('id', null);
 
         $tickets = $request->user()->tickets()
             ->when($request->filled('search'), function ($query) use ($request) {
@@ -34,9 +35,11 @@ class TicketController extends Controller
                 // Group the OR search so it never widens the ownership scope.
                 $query->where(function ($group) use ($search) {
                     $group->where('title', 'like', "%{$search}%")
+                        ->orWhere('id', 'like', "%{$search}%")
                         ->orWhere('description', 'like', "%{$search}%");
                 });
             })
+            ->when($request->filled('id'), fn ($query) => $query->where('id', $request->input('id')))
             ->when($request->filled('status'), fn ($query) => $query->where('status', $request->input('status')))
             ->when($request->filled('priority'), fn ($query) => $query->where('priority', $request->input('priority')))
             ->orderBy($sort, $direction)
